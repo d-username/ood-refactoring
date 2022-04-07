@@ -1,4 +1,5 @@
 const Screens = require('./screens.js')
+const Movies = require('./movies.js')
 
 class Cinema {
   constructor() {
@@ -8,38 +9,30 @@ class Cinema {
 
   addScreen(screenName, capacity) {
     const screens = new Screens()
-    
+    //first check in the capacity is within the limit, if yes then return error
     if (!screens.screenCapacity(capacity)) {
       return 'Exceeded max capacity'
     }
-    
+    //check if screen already exist in a separate method
     if (screens.screenExists(this.screens, screenName)) {
       return 'Screen already exists'
     }
-
+    //use a separate class "screens", for creating screens.
     const newScreen = screens.createScreen(screenName, capacity)
     this.screens.push(newScreen)
   }
 
   // Add a new movie
   addMovie(movieName, rating, duration) {
-    // TODO: //Check the film doesn't already exist - separate method
-    let movie = null
-    for (let i = 0; i < this.movies.length; i++) {
-      if (this.movies[i].name == movieName) {
-        movie = this.movies[i]
-      }
-    }
-
-    if (movie != null) {
+    const movies = new Movies()
+    //Check the film doesn't already exist - separate method
+    if (movies.movieExists(this.movies, movieName)) {
       return 'Film already exists'
     }
-
+   
     // TODO: //Check the rating is valid - separate method
-    if (rating != 'U' && rating != 'PG') {
-      if (rating != '12' && rating != '15' && rating != '18') {
-        return 'Invalid rating'
-      }
+    if (!movies.isRatingValid(rating)) {
+      return 'Invalid rating'
     }
 
     // TODO: //Check duration - separate method
@@ -47,6 +40,7 @@ class Cinema {
     if (result == null) {
       return 'Invalid duration'
     }
+
 
     const hours = parseInt(result[1])
     const mins = parseInt(result[2])

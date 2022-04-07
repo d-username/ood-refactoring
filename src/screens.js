@@ -1,8 +1,8 @@
 class Screens {
-  constructor(name, capacity) {
-    this.name = name
-    this.capacity = capacity
-  }
+//   constructor(name, capacity) {
+//     this.name = name
+//     this.capacity = capacity
+//   }
 
   screenCapacity(capacity) {
     if (capacity > 100) {
